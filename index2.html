@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/_sdk/element_sdk.js"></script>
+  <title>Birthday Surprise 🎉</title>
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+    }
+
+    body {
+      font-family: 'Quicksand', 'Comic Sans MS', cursive, sans-serif;
+      overflow: hidden;
+    }
+
+    .birthday-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+      animation: gradientShift 8s ease infinite;
+      background-size: 400% 400%;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .floating-shapes {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .shape {
+      position: absolute;
+      opacity: 0.15;
+      animation: float linear infinite;
+    }
+
+    .shape:nth-child(1) {
+      left: 10%;
+      top: 20%;
+      font-size: 3rem;
+      animation-duration: 15s;
+    }
+
+    .shape:nth-child(2) {
+      left: 70%;
+      top: 40%;
+      font-size: 2.5rem;
+      animation-duration: 20s;
+      animation-delay: 2s;
+    }
+
+    .shape:nth-child(3) {
+      left: 30%;
+      top: 60%;
+      font-size: 2rem;
+      animation-duration: 18s;
+      animation-delay: 4s;
+    }
+
+    .shape:nth-child(4) {
+      left: 80%;
+      top: 70%;
+      font-size: 3.5rem;
+      animation-duration: 22s;
+      animation-delay: 1s;
+    }
+
+    .shape:nth-child(5) {
+      left: 50%;
+      top: 10%;
+      font-size: 2.8rem;
+      animation-duration: 17s;
+      animation-delay: 3s;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-30px) rotate(180deg); }
+      100% { transform: translateY(0) rotate(360deg); }
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+      padding: 20px;
+      z-index: 2;
+    }
+
+    .content {
+      max-width: 600px;
+      width: 100%;
+    }
+
+    .content h1 {
+      font-size: 3.2rem;
+      animation: fadeDown 1.5s ease;
+      text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
+      margin-bottom: 20px;
+    }
+
+    .content p {
+      font-size: 1.3rem;
+      margin-top: 15px;
+      animation: fadeUp 2s ease;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+      line-height: 1.6;
+    }
+
+    .input-wrapper {
+      margin-top: 30px;
+      animation: fadeIn 2.5s ease;
+    }
+
+    input {
+      padding: 14px 20px;
+      width: 80%;
+      max-width: 320px;
+      border-radius: 30px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      text-align: center;
+      font-size: 1.1rem;
+      font-family: 'Quicksand', sans-serif;
+      background: rgba(255, 255, 255, 0.95);
+      transition: all 0.3s ease;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #ff4081;
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(255, 64, 129, 0.5);
+    }
+
+    button {
+      margin-top: 25px;
+      padding: 14px 40px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      background: linear-gradient(135deg, #ff4081 0%, #ff6b9d 100%);
+      color: white;
+      font-weight: 600;
+      font-family: 'Quicksand', sans-serif;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(255, 64, 129, 0.4);
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, #e73370 0%, #ff4081 100%);
+      transform: scale(1.08) translateY(-2px);
+      box-shadow: 0 8px 25px rgba(255, 64, 129, 0.6);
+    }
+
+    button:active {
+      transform: scale(1.02);
+    }
+
+    .share {
+      margin-top: 25px;
+      font-size: 0.95rem;
+      opacity: 0.9;
+      animation: fadeIn 3s ease;
+      text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .confetti {
+      position: fixed;
+      width: 12px;
+      height: 12px;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    @keyframes confettiFall {
+      to { 
+        transform: translateY(110%) rotate(720deg);
+        opacity: 0;
+      }
+    }
+
+    .sparkle {
+      position: fixed;
+      font-size: 1.5rem;
+      z-index: 3;
+      pointer-events: none;
+      animation: sparkleAnim 2s ease-out forwards;
+    }
+
+    @keyframes sparkleAnim {
+      0% {
+        opacity: 1;
+        transform: scale(0) rotate(0deg);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.5) rotate(180deg);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(0.5) rotate(360deg);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .content h1 {
+        font-size: 2.2rem;
+      }
+
+      .content p {
+        font-size: 1.1rem;
+      }
+
+      input {
+        font-size: 1rem;
+        width: 90%;
+      }
+
+      button {
+        font-size: 1rem;
+        padding: 12px 30px;
+      }
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body class="h-full">
+  <div class="birthday-wrapper"><!-- Floating decorative shapes -->
+   <div class="floating-shapes">
+    <div class="shape">
+     🎈
+    </div>
+    <div class="shape">
+     🎁
+    </div>
+    <div class="shape">
+     🎂
+    </div>
+    <div class="shape">
+     🎉
+    </div>
+    <div class="shape">
+     ✨
+    </div>
+   </div>
+   <div class="overlay">
+    <div class="content">
+     <h1 id="title">🎂 Happy Birthday To You Ji🎉</h1>
+     <p id="msg">Mr. Phullu 💖</p>
+     <div class="input-wrapper"><label for="Krish" style="position: absolute; left: -9999px;">Krish</label> <input type="text" id="name" placeholder="krish"> <br><button id="surpriseBtn">🎁 Start Surprise</button>
+     </div>
+     <div class="share" id="shareText">
+      Share this page with love 💌
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      background_color: "#667eea",
+      accent_color: "#ff4081",
+      text_color: "#ffffff",
+      button_color: "#ff4081",
+      overlay_color: "#000000",
+      font_family: "Quicksand",
+      font_size: 16,
+      initial_title: "🎂 Wishing You A Very Happy Birthday 🎉",
+      initial_message: "Krish Babe 💖",
+      input_placeholder: "Krish Babe",
+      button_text: "🎁 Start Surprise",
+      final_message: "May your life be filled with happiness, success and love ✨💝.",
+      share_text: "Share this page with love 💌"
+    };
+
+    let hasStarted = false;
+
+    async function onConfigChange(config) {
+      const bgColor = config.background_color || defaultConfig.background_color;
+      const accentColor = config.accent_color || defaultConfig.accent_color;
+      const textColor = config.text_color || defaultConfig.text_color;
+      const buttonColor = config.button_color || defaultConfig.button_color;
+      const overlayColor = config.overlay_color || defaultConfig.overlay_color;
+      const fontFamily = config.font_family || defaultConfig.font_family;
+      const fontSize = config.font_size || defaultConfig.font_size;
+
+      // Apply colors
+      document.querySelector('.birthday-wrapper').style.background = `linear-gradient(135deg, ${bgColor} 0%, ${accentColor} 50%, ${buttonColor} 100%)`;
+      document.querySelector('.overlay').style.background = `${overlayColor}4D`; // 30% opacity
+      document.querySelector('.overlay').style.color = textColor;
+      
+      const button = document.getElementById('surpriseBtn');
+      button.style.background = `linear-gradient(135deg, ${buttonColor} 0%, ${buttonColor}DD 100%)`;
+      button.style.color = textColor;
+
+      const input = document.getElementById('name');
+      input.style.borderColor = `${textColor}4D`;
+
+      // Apply font
+      document.body.style.fontFamily = `${fontFamily}, 'Comic Sans MS', cursive, sans-serif`;
+
+      // Apply font sizes
+      document.getElementById('title').style.fontSize = `${fontSize * 2}px`;
+      document.getElementById('msg').style.fontSize = `${fontSize * 1.0625}px`;
+      input.style.fontSize = `${fontSize * 0.9375}px`;
+      button.style.fontSize = `${fontSize * 0.9375}px`;
+      document.getElementById('shareText').style.fontSize = `${fontSize * 0.875}px`;
+
+      // Apply text content
+      if (!hasStarted) {
+        document.getElementById('title').textContent = config.initial_title || defaultConfig.initial_title;
+        document.getElementById('msg').textContent = config.initial_message || defaultConfig.initial_message;
+      }
+      input.placeholder = config.input_placeholder || defaultConfig.input_placeholder;
+      button.textContent = config.button_text || defaultConfig.button_text;
+      document.getElementById('shareText').textContent = config.share_text || defaultConfig.share_text;
+    }
+
+    function startSurprise() {
+      const name = document.getElementById('name').value.trim() || 'Dear';
+      const config = window.elementSdk?.config || defaultConfig;
+      const finalMessage = config.final_message || defaultConfig.final_message;
+      
+      hasStarted = true;
+      
+      document.getElementById('title').innerHTML = `🎉 Happy Birthday ${name}! 🎂`;
+      document.getElementById('msg').innerHTML = finalMessage;
+      
+      createConfetti();
+      createSparkles();
+      
+      // Add continuous confetti
+      const confettiInterval = setInterval(() => {
+        if (document.querySelectorAll('.confetti').length < 50) {
+          createConfetti(20);
+        }
+      }, 2000);
+
+      // Stop after 15 seconds
+      setTimeout(() => {
+        clearInterval(confettiInterval);
+      }, 15000);
+    }
+
+    function createConfetti(count = 100) {
+      for (let i = 0; i < count; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        confetti.style.left = Math.random() * 100 + '%';
+        confetti.style.top = '-20px';
+        confetti.style.animation = `confettiFall ${Math.random() * 3 + 3}s linear forwards`;
+        confetti.style.animationDelay = Math.random() * 0.5 + 's';
+        confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 60%)`;
+        confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+        confetti.style.width = Math.random() * 8 + 8 + 'px';
+        confetti.style.height = Math.random() * 8 + 8 + 'px';
+        document.body.appendChild(confetti);
+
+        setTimeout(() => confetti.remove(), 6000);
+      }
+    }
+
+    function createSparkles() {
+      const sparkleEmojis = ['✨', '⭐', '💫', '🌟', '💖', '💝'];
+      
+      for (let i = 0; i < 15; i++) {
+        setTimeout(() => {
+          const sparkle = document.createElement('div');
+          sparkle.classList.add('sparkle');
+          sparkle.textContent = sparkleEmojis[Math.floor(Math.random() * sparkleEmojis.length)];
+          sparkle.style.left = Math.random() * 100 + '%';
+          sparkle.style.top = Math.random() * 100 + '%';
+          document.body.appendChild(sparkle);
+
+          setTimeout(() => sparkle.remove(), 2000);
+        }, i * 200);
+      }
+    }
+
+    // Event listener
+    document.getElementById('surpriseBtn').addEventListener('click', startSurprise);
+    
+    document.getElementById('name').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        startSurprise();
+      }
+    });
+
+    // Initialize Element SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.background_color || defaultConfig.background_color,
+              set: (value) => {
+                config.background_color = value;
+                window.elementSdk.setConfig({ background_color: value });
+              }
+            },
+            {
+              get: () => config.accent_color || defaultConfig.accent_color,
+              set: (value) => {
+                config.accent_color = value;
+                window.elementSdk.setConfig({ accent_color: value });
+              }
+            },
+            {
+              get: () => config.text_color || defaultConfig.text_color,
+              set: (value) => {
+                config.text_color = value;
+                window.elementSdk.setConfig({ text_color: value });
+              }
+            },
+            {
+              get: () => config.button_color || defaultConfig.button_color,
+              set: (value) => {
+                config.button_color = value;
+                window.elementSdk.setConfig({ button_color: value });
+              }
+            },
+            {
+              get: () => config.overlay_color || defaultConfig.overlay_color,
+              set: (value) => {
+                config.overlay_color = value;
+                window.elementSdk.setConfig({ overlay_color: value });
+              }
+            }
+          ],
+          borderables: [],
+          fontEditable: {
+            get: () => config.font_family || defaultConfig.font_family,
+            set: (value) => {
+              config.font_family = value;
+              window.elementSdk.setConfig({ font_family: value });
+            }
+          },
+          fontSizeable: {
+            get: () => config.font_size || defaultConfig.font_size,
+            set: (value) => {
+              config.font_size = value;
+              window.elementSdk.setConfig({ font_size: value });
+            }
+          }
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ["initial_title", config.initial_title || defaultConfig.initial_title],
+          ["initial_message", config.initial_message || defaultConfig.initial_message],
+          ["input_placeholder", config.input_placeholder || defaultConfig.input_placeholder],
+          ["button_text", config.button_text || defaultConfig.button_text],
+          ["final_message", config.final_message || defaultConfig.final_message],
+          ["share_text", config.share_text || defaultConfig.share_text]
+        ])
+      });
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9b31b401567645af',t:'MTc2NjU5NjEzMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
